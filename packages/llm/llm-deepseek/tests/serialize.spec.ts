@@ -262,7 +262,7 @@ describe('serializeRequest', () => {
     expect(wire.reasoning_effort).toBeUndefined()
   })
 
-  it('rejects an effort outside the DeepSeek capability', () => {
+  it('rejects an effort outside the 金石易服 capability', () => {
     expect(() => serializeRequest(request({
       messages: history,
       reasoningEffort: ReasoningEffortId('medium'),

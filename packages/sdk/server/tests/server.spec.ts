@@ -788,7 +788,7 @@ describe('HarnessSdkJsonRpcServer', () => {
       expect(inspect.hasAdapterFor('missing-provider')).toBe(false)
       await server.initialize({ cwd: storageDir, provider: 'deepseek-official', model: 'preinstalled-model' })
 
-      expect(ctx.get('llm')?.listProviders().filter(provider => provider.id === 'deepseek-official')).toEqual([{ id: 'deepseek-official', name: 'DeepSeek' }])
+      expect(ctx.get('llm')?.listProviders().filter(provider => provider.id === 'deepseek-official')).toEqual([{ id: 'deepseek-official', name: '金石易服' }])
       await server.shutdown()
     } finally {
       await ctx.fiber.dispose()
@@ -807,7 +807,7 @@ describe('HarnessSdkJsonRpcServer', () => {
       await expect(server.initialize({ cwd: storageDir, provider: 'private', model: 'new-model' }))
         .rejects.toThrow('no adapter registered for provider "private"')
 
-      expect(ctx.get('llm')?.listProviders()).toEqual([{ id: 'deepseek-official', name: 'DeepSeek' }])
+      expect(ctx.get('llm')?.listProviders()).toEqual([{ id: 'deepseek-official', name: '金石易服' }])
       await server.shutdown()
     } finally {
       await ctx.fiber.dispose()
@@ -859,7 +859,7 @@ describe('HarnessSdkJsonRpcServer', () => {
 
       await expect(server.handleRequest('does/not/exist', {}))
         .rejects
-        .toThrow('unknown DeepSeek Harness SDK runtime method: does/not/exist')
+        .toThrow('unknown 金石易服 SDK runtime method: does/not/exist')
 
       await server.shutdown()
     } finally {

@@ -294,13 +294,13 @@ describe('DeepSeekSearchProvider error handling', () => {
     }).search({ query: 'q' }, controller.signal))
       .rejects.toThrow(expect.objectContaining({
         code: 'WEB_PROVIDER_ERROR',
-        message: 'DeepSeek search credential resolution failed: Error: credential backend failed',
+        message: '金石易服 search credential resolution failed: Error: credential backend failed',
       }))
   })
 
   it('uses the default credential reference when no resolver is configured', async () => {
     await expect(searchProvider({ ...options, apiKey: '' }).search({ query: 'q' }))
-      .rejects.toThrow('DeepSeek search has no API key for "DEEPSEEK_API_KEY"')
+      .rejects.toThrow('金石易服 search has no API key for "DEEPSEEK_API_KEY"')
   })
 
   it('observes cancellation triggered synchronously by credential resolution', async () => {
@@ -334,13 +334,13 @@ describe('DeepSeekSearchProvider error handling', () => {
   it('keeps a status-line message when the error body is not JSON', async () => {
     vi.stubGlobal('fetch', vi.fn(async () => new Response('upstream error', { status: 503 })))
     await expect(searchProvider(options).search({ query: 'q' }))
-      .rejects.toThrow(expect.objectContaining({ message: 'DeepSeek API error (HTTP 503)' }))
+      .rejects.toThrow(expect.objectContaining({ message: '金石易服 API error (HTTP 503)' }))
   })
 
   it('keeps the status-line message when the JSON error body carries no detail', async () => {
     vi.stubGlobal('fetch', vi.fn(async () => jsonResponse({}, { status: 500 })))
     await expect(searchProvider(options).search({ query: 'q' }))
-      .rejects.toThrow(expect.objectContaining({ message: 'DeepSeek API error (HTTP 500)' }))
+      .rejects.toThrow(expect.objectContaining({ message: '金石易服 API error (HTTP 500)' }))
   })
 
   it('maps an abort to WEB_ABORTED', async () => {

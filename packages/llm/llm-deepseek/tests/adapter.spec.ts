@@ -56,7 +56,7 @@ function adapterOf(config: Partial<LlmDeepSeek.Config> & { apiKey?: string } = {
   })
 }
 
-describe('DeepSeekAdapter against a mock server', () => {
+describe('金石易服Adapter against a mock server', () => {
   it('streams a text generation end to end through the assembler', async () => {
     const server = await mockServer([{ kind: 'sse', events: textEvents }])
     const ctx = await harness(server.url)
@@ -80,7 +80,7 @@ describe('DeepSeekAdapter against a mock server', () => {
       stream: true,
       stream_options: { include_usage: true },
     })
-    // App attribution and DeepSeek request identity are independent wire facts.
+    // App attribution and 金石易服 request identity are independent wire facts.
     expect(server.headers[0]?.['user-agent']).toBe(userAgent())
     expect(server.headers[0]?.['x-deepseek-harness-user-id']).toBe(getOrCreateAnonymousUserId())
     expect(server.headers[0]).not.toHaveProperty('x-deepseek-harness-session-id')
@@ -328,7 +328,7 @@ describe('DeepSeekAdapter against a mock server', () => {
     })
   })
 
-  it('parses a future Retry-After HTTP date and the DeepSeek request-id fallback', async () => {
+  it('parses a future Retry-After HTTP date and the 金石易服 request-id fallback', async () => {
     const now = 1_800_000_000_000
     const dateNow = vi.spyOn(Date, 'now').mockReturnValue(now)
     try {
@@ -427,7 +427,7 @@ describe('DeepSeekAdapter against a mock server', () => {
       kind: 'error',
       failure: {
         code: 'TRANSPORT',
-        message: 'DeepSeek API request to http://127.0.0.1:1 failed',
+        message: '金石易服 API request to http://127.0.0.1:1 failed',
       },
     })
   })
@@ -469,7 +469,7 @@ describe('DeepSeekAdapter against a mock server', () => {
     expect(result.finish.kind).toBe('error')
     if (result.finish.kind !== 'error') throw new Error('expected an error finish')
     expect(result.finish.failure.code).toBe('TRANSPORT')
-    expect(result.finish.failure.message).toMatch(/^DeepSeek API stream from .* failed$/)
+    expect(result.finish.failure.message).toMatch(/^金石易服 API stream from .* failed$/)
   })
 
   it('aborts mid-stream via the request signal', async () => {
@@ -526,7 +526,7 @@ describe('DeepSeekAdapter against a mock server', () => {
         for await (const _chunk of adapter.stream({ provider: 'deepseek-official', model: 'm', messages: [] })) { /* drain */ }
       }
       await expect(drain()).rejects.toMatchObject({
-        message: 'DeepSeek API request to https://example.invalid failed',
+        message: '金石易服 API request to https://example.invalid failed',
         code: 'TRANSPORT',
         cause: 'offline',
       })
@@ -621,10 +621,10 @@ describe('plugin registration and config', () => {
     const fiber = await ctx.plugin(LlmDeepSeek, {
       baseURL: server.url,
     })
-    expect(ctx.llm.listProviders()).toEqual([{ id: 'deepseek-official', name: 'DeepSeek' }])
+    expect(ctx.llm.listProviders()).toEqual([{ id: 'deepseek-official', name: '金石易服' }])
     expect(ctx.llm.listConfigurableProviders()).toEqual([{
       provider: 'deepseek-official',
-      displayName: 'DeepSeek',
+      displayName: '金石易服',
       settingsNs: 'llm-deepseek',
       settingsPath: [],
     }])
@@ -656,16 +656,16 @@ describe('plugin registration and config', () => {
     const ctx = new Context()
     await ctx.plugin(LlmRuntime)
     await ctx.plugin(LlmDeepSeek, { baseURL: 'http://127.0.0.1:1' })
-    expect(ctx.llm.listProviders()).toEqual([{ id: 'deepseek-official', name: 'DeepSeek' }])
+    expect(ctx.llm.listProviders()).toEqual([{ id: 'deepseek-official', name: '金石易服' }])
     await expect(ctx.llm.listModels('deepseek-official')).resolves.toEqual([
-      { provider: 'deepseek-official', id: 'deepseek-v4-flash', name: 'DeepSeek-V4-Flash', inputModalities: ['text'] },
-      { provider: 'deepseek-official', id: 'deepseek-v4-pro', name: 'DeepSeek-V4-Pro', inputModalities: ['text'] },
+      { provider: 'deepseek-official', id: 'deepseek-v4-flash', name: '金石易服-V4-Flash', inputModalities: ['text'] },
+      { provider: 'deepseek-official', id: 'deepseek-v4-pro', name: '金石易服-V4-Pro', inputModalities: ['text'] },
     ])
     await expect(ctx.llm.resolveModelInfo('deepseek-official', 'deepseek-v4-flash'))
       .resolves.toMatchObject({
         provider: 'deepseek-official',
         id: 'deepseek-v4-flash',
-        name: 'DeepSeek-V4-Flash',
+        name: '金石易服-V4-Flash',
         context: { contextWindow: 1_000_000 },
         defaultMaxTokens: 256_000,
         reasoning: {
@@ -753,8 +753,8 @@ describe('plugin registration and config', () => {
     await ctx.plugin(LlmRuntime)
     LlmDeepSeek.apply(ctx, { baseURL: 'http://127.0.0.1:1' })
     await expect(ctx.llm.listModels('deepseek-official')).resolves.toEqual([
-      { provider: 'deepseek-official', id: 'deepseek-v4-flash', name: 'DeepSeek-V4-Flash', inputModalities: ['text'] },
-      { provider: 'deepseek-official', id: 'deepseek-v4-pro', name: 'DeepSeek-V4-Pro', inputModalities: ['text'] },
+      { provider: 'deepseek-official', id: 'deepseek-v4-flash', name: '金石易服-V4-Flash', inputModalities: ['text'] },
+      { provider: 'deepseek-official', id: 'deepseek-v4-pro', name: '金石易服-V4-Pro', inputModalities: ['text'] },
     ])
   })
 
@@ -907,7 +907,7 @@ describe('plugin registration and config', () => {
     const ctx = new Context()
     await ctx.plugin(LlmRuntime)
     await ctx.plugin(LlmDeepSeek, {})
-    expect(ctx.llm.listProviders()).toEqual([{ id: 'deepseek-official', name: 'DeepSeek' }])
+    expect(ctx.llm.listProviders()).toEqual([{ id: 'deepseek-official', name: '金石易服' }])
   })
 
   it('loads keyless, keeps the catalog browsable, and fails the request actionably', async () => {
@@ -917,7 +917,7 @@ describe('plugin registration and config', () => {
     await ctx.plugin(LlmDeepSeek, { baseURL: 'http://127.0.0.1:1' })
     // First-boot onboarding: the route registers so models stay discoverable;
     // only the request itself needs a key.
-    expect(ctx.llm.listProviders()).toEqual([{ id: 'deepseek-official', name: 'DeepSeek' }])
+    expect(ctx.llm.listProviders()).toEqual([{ id: 'deepseek-official', name: '金石易服' }])
     await expect(ctx.llm.listModels('deepseek-official')).resolves.toHaveLength(2)
     const first = await assemble(ctx, { model: 'deepseek-v4-flash', messages: [] })
     expect(first.finish).toMatchObject({ kind: 'error', failure: { code: 'MISSING_CREDENTIAL' } })
@@ -998,7 +998,7 @@ describe('plugin registration and config', () => {
     await ctx.plugin(LlmRuntime)
     // Registration succeeds; no call is made (would hit api.deepseek.com).
     await ctx.plugin(LlmDeepSeek, {})
-    expect(ctx.llm.listProviders()).toEqual([{ id: 'deepseek-official', name: 'DeepSeek' }])
+    expect(ctx.llm.listProviders()).toEqual([{ id: 'deepseek-official', name: '金石易服' }])
   })
 
   it('adapter is constructible directly for embedding over the shared resolver', async () => {

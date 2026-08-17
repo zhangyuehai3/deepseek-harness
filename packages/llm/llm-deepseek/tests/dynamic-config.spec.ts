@@ -145,7 +145,7 @@ describe('request-level dynamic configuration', () => {
       maxDelayMs: 100,
       jitterRatio: 0.2,
     })
-    expect(ctx.llm.listProviders()).toEqual([{ id: 'deepseek-official', name: 'DeepSeek' }])
+    expect(ctx.llm.listProviders()).toEqual([{ id: 'deepseek-official', name: '金石易服' }])
     expect(observed).toEqual([['deepseek-official']])
   })
 

@@ -149,7 +149,7 @@ export function mapAnthropicResponse(response: AnthropicResponse): WebSearchResu
   )
   if (resultBlocks.length === 0) {
     throw new WebError(
-      'DeepSeek returned no web_search_tool_result blocks; the request may not have triggered native web search',
+      '金石易服 returned no web_search_tool_result blocks; the request may not have triggered native web search',
       'WEB_PROVIDER_ERROR',
     )
   }
@@ -237,12 +237,12 @@ export class DeepSeekSearchProvider implements WebSearchProvider {
       })
     } catch (error: unknown) {
       if (signal?.aborted === true || isAbortError(error)) throw searchAborted(signal, error)
-      throw new WebError(`DeepSeek search request failed: ${String(error)}`, 'WEB_PROVIDER_ERROR', { cause: error })
+      throw new WebError(`金石易服 search request failed: ${String(error)}`, 'WEB_PROVIDER_ERROR', { cause: error })
     }
 
     if (!response.ok) {
       const status = response.status
-      let message = `DeepSeek API error (HTTP ${status})`
+      let message = `金石易服 API error (HTTP ${status})`
       try {
         const parsed = await response.json() as AnthropicError
         const detail = typeof parsed.error === 'string' ? parsed.error : parsed.error?.message ?? parsed.message
@@ -265,7 +265,7 @@ export class DeepSeekSearchProvider implements WebSearchProvider {
     } catch (error: unknown) {
       if (signal?.aborted === true || isAbortError(error)) throw searchAborted(signal, error)
       if (error instanceof WebError) throw error
-      throw new WebError(`DeepSeek returned an unprocessable response body: ${String(error)}`, 'WEB_PROVIDER_ERROR', { cause: error })
+      throw new WebError(`金石易服 returned an unprocessable response body: ${String(error)}`, 'WEB_PROVIDER_ERROR', { cause: error })
     }
   }
 
@@ -284,7 +284,7 @@ export class DeepSeekSearchProvider implements WebSearchProvider {
     } catch (error: unknown) {
       if (signal?.aborted === true || isAbortError(error)) throw searchAborted(signal, error)
       throw new WebError(
-        `DeepSeek search credential resolution failed: ${String(error)}`,
+        `金石易服 search credential resolution failed: ${String(error)}`,
         'WEB_PROVIDER_ERROR',
         { cause: error },
       )
@@ -292,7 +292,7 @@ export class DeepSeekSearchProvider implements WebSearchProvider {
     if (resolved !== undefined && resolved.length > 0) return resolved
     const ref = options.apiKeyEnv ?? 'DEEPSEEK_API_KEY'
     throw new WebError(
-      `DeepSeek search has no API key for "${ref}"; store it through the credentials service`
+      `金石易服 search has no API key for "${ref}"; store it through the credentials service`
       + ' (the web Models page writes it), export it in the launching environment, or set a literal'
       + ' "apiKey" in the web-search-deepseek config',
       'WEB_PROVIDER_CREDENTIAL_MISSING',
@@ -331,7 +331,7 @@ function throwIfSearchAborted(signal?: AbortSignal): void {
 
 /** Build the provider's stable cancellation error while retaining the caller's reason. */
 function searchAborted(signal?: AbortSignal, fallback?: unknown): WebError {
-  return new WebError('DeepSeek search aborted', 'WEB_ABORTED', {
+  return new WebError('金石易服 search aborted', 'WEB_ABORTED', {
     cause: signal?.aborted === true ? signal.reason : fallback,
   })
 }
