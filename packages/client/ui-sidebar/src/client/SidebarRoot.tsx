@@ -140,7 +140,7 @@ export function SidebarRoot({
             <BrandWordmark />
             <div className={css.brandTexts}>
               <span className={css.brandTextZh}>金石易服</span>
-              <span className={css.brandTextEn}>EZAIGC n8n</span>
+              <span className={css.brandTextEn}>EZAIGC</span>
             </div>
           </button>
         )}
