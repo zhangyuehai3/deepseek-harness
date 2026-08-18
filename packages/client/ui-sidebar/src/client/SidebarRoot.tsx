@@ -138,6 +138,10 @@ export function SidebarRoot({
             onClick={() => { startSession() }}
           >
             <BrandWordmark />
+            <div className={css.brandTexts}>
+              <span className={css.brandTextZh}>金石易服</span>
+              <span className={css.brandTextEn}>EZAIGC n8n</span>
+            </div>
           </button>
         )}
         {/* Rail resting state is the whale mark; hovering swaps in the panel

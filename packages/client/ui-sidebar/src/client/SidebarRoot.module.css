@@ -90,10 +90,10 @@
 .logoRow {
   flex: none;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-end;
   gap: 8px;
-  height: 60px;
+  height: 68px;
   padding: 8px 0 8px 4px;
   margin-bottom: 8px;
   box-sizing: border-box;
@@ -105,6 +105,7 @@
   padding: 0;
   margin-bottom: 12px;
   justify-content: flex-start;
+  align-items: center;
 }
 
 /* Brand group (figma I133:7632): the full wordmark rides the text ink
@@ -114,14 +115,38 @@
 .brand {
   flex: 1;
   min-width: 0;
-  display: inline-flex;
-  align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   overflow: hidden;
   padding: 0;
   border: none;
   background: transparent;
   color: inherit;
   cursor: pointer;
+}
+
+.brandTexts {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 2px;
+}
+
+.brandTextZh {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--dsw-alias-label-primary);
+  line-height: 1.1;
+}
+
+.brandTextEn {
+  font-size: 8px;
+  font-weight: 500;
+  color: var(--dsw-alias-label-secondary);
+  letter-spacing: 0.05em;
+  line-height: 1.1;
+  margin-top: 1px;
 }
 
 .iconButton {
