@@ -116,7 +116,6 @@
   flex: 1;
   min-width: 0;
   display: flex;
-  flex-direction: column;
   align-items: flex-start;
   overflow: hidden;
   padding: 0;
@@ -128,21 +127,22 @@
 
 .brandTexts {
   display: flex;
-  flex-direction: row;
-  align-items: baseline;
+  flex-direction: column;
+  align-items: center;
   gap: 4px;
+  align-items: center;
   margin-top: 4px;
 }
 
 .brandTextZh {
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--dsw-alias-label-primary);
   line-height: 1.1;
 }
 
 .brandTextEn {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 500;
   color: var(--dsw-alias-label-secondary);
   letter-spacing: 0.05em;
