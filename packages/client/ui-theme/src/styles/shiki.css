@@ -7,7 +7,7 @@
 :root {
   --shiki-foreground: var(--dsw-alias-label-primary);
   --shiki-background: var(--dsw-alias-markdown-code-block);
-  --shiki-token-constant: #1c7ed6;
+  --shiki-token-constant: #265C5A;
   --shiki-token-string: #2f9e44;
   --shiki-token-comment: #868e96;
   --shiki-token-keyword: #d6336c;
@@ -19,7 +19,7 @@
 }
 
 body[data-ds-dark-theme] {
-  --shiki-token-constant: #4dabf7;
+  --shiki-token-constant: #265C5A;
   --shiki-token-string: #69db7c;
   --shiki-token-comment: #adb5bd;
   --shiki-token-keyword: #faa2c1;
