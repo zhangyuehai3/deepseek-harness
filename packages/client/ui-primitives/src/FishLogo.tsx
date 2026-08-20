@@ -17,9 +17,10 @@ export function FishLogo({ size = 24, className }: IconProps) {
       alt=""
       aria-hidden="true"
       width={size}
+
       height="auto"
       className={className}
-      style={{ display: 'block' }}
+      style={{ display: 'block',marginRight:20 }}
     />
   )
 }

@@ -10,7 +10,7 @@ const LOGO_DATA_URI = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAC70AAAk1CAY
  * @param props.className - extra class for layout placement.
  * @returns the wordmark img (aria-hidden decorative brand art).
  */
-export function BrandWordmark({ size = 45, className }: IconProps) {
+export function BrandWordmark({ size = 40, className }: IconProps) {
   return (
     <img
       src={LOGO_DATA_URI}
@@ -19,7 +19,7 @@ export function BrandWordmark({ size = 45, className }: IconProps) {
       height={size}
       width="auto"
       className={className}
-      style={{ display: 'block' }}
+      style={{ display: 'block',marginRight:5 }}
     />
   )
 }
