@@ -63,9 +63,9 @@ function mount(version?: string, mutateImpl: () => Promise<unknown> = () => Prom
 describe('WelcomeNotice', () => {
   it('uses the exact owner copy in both GUI locales', () => {
     expect(WELCOME_NOTICE_COPY.en).toEqual({
-      title: 'Forced Update',
-      body: 'Please update to the latest version of EZAIGC Desktop before continuing.',
-      continueLabel: 'Continue',
+      title: 'Welcome to EZAIGC Desktop',
+      body: 'Built on the EZAIGC Harness architecture and deeply customized, seamlessly integrating a collaborative matrix of top-tier large models including DeepSeek, Kimi, and more. Natively supports deep-thinking reasoning chains, intelligent web retrieval, and global quick wake-up. All conversation data is encrypted and stored locally, delivering a purer, faster, and more secure desktop-level AI collaborative productivity experience.',
+      continueLabel: 'Get Started',
     })
     expect(en.welcomeBody).toBe(WELCOME_NOTICE_COPY.en.body)
     expect(zh.welcomeBody).toBe(WELCOME_NOTICE_COPY.zh.body)
