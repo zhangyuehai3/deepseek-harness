@@ -63,9 +63,9 @@ describe('ui-settings-models apply', () => {
     expect(injected.api).toBeDefined()
     const onboarding = before.slots.entries('settings.onboarding')
     expect(onboarding).toHaveLength(2)
-    expect(onboarding.find(entry => entry.options.id === 'welcome-notice')).toMatchObject({
+    expect(onboarding.find(entry => entry.options.id === 'forced-update')).toMatchObject({
       component: WelcomeNotice,
-      options: { id: 'welcome-notice', order: -100 },
+      options: { id: 'forced-update', order: -100 },
     })
     const deepSeek = onboarding.find(entry => entry.options.id === 'deepseek-official')!
     expect(deepSeek.component).toBe(DeepSeekOnboardingDialog)
@@ -148,7 +148,7 @@ describe('ui-settings-models apply', () => {
     declare(b.slots)
     await b.ctx.plugin({ inject: [...inject], apply }).await()
     const entry = b.slots.entries('settings.onboarding')
-      .find(candidate => candidate.options.id === 'welcome-notice')!
+      .find(candidate => candidate.options.id === 'forced-update')!
     const injected = (
       entry.inject as unknown as () => import('../src/client/WelcomeNotice.tsx').WelcomeNoticeInjected
     )()
@@ -209,7 +209,7 @@ describe('pushed invalidations', () => {
     declare(b.slots)
     await b.ctx.plugin({ inject: [...inject], apply }).await()
     const entry = b.slots.entries('settings.onboarding')
-      .find(candidate => candidate.options.id === 'welcome-notice')!
+      .find(candidate => candidate.options.id === 'forced-update')!
     const injected = (
       entry.inject as unknown as
       () => import('../src/client/WelcomeNotice.tsx').WelcomeNoticeInjected

@@ -1,4 +1,4 @@
-/** Welcome-notice state, durable when the browser may use Host settings. */
+/** Forced-update state, durable when the browser may use Host settings. */
 
 import type { IApiClient, SettingsNamespaceView } from '@deepseek-ai/dsh-api-remotes/client'
 import type { SnapshotStore } from '@deepseek-ai/dsh-client-runtime/client'

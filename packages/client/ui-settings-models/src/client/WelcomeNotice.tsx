@@ -1,4 +1,4 @@
-/** Product-wide, versioned internal-testing notice. */
+/** Product-wide, versioned forced-update notice. */
 
 import { useCallback, useEffect, useRef } from 'react'
 import type { ReactNode } from 'react'
@@ -16,7 +16,7 @@ export interface WelcomeNoticeInjected {
     /** Durable or process-local acknowledgement state. */
     welcome: SnapshotStore<WelcomeNoticeState>
   }
-  /** Welcome acknowledgement controller. */
+  /** Forced-update acknowledgement controller. */
   controller: WelcomeNoticeStore
   /** Onboarding copy. */
   t: (key: keyof typeof en) => string
@@ -27,9 +27,9 @@ export type WelcomeNoticeProps =
   PropsRuntime<'settings.onboarding'> & InjectFace<WelcomeNoticeInjected>
 
 /**
- * Render the current notice until its exact copy version is acknowledged.
- * @param props - settings-shell owner state and welcome dependencies.
- * @returns the welcome modal or null while the step decides not to show.
+ * Render the forced-update notice until its exact copy version is acknowledged.
+ * @param props - settings-shell owner state and forced-update dependencies.
+ * @returns the forced-update modal or null while the step decides not to show.
  */
 export function WelcomeNotice(props: WelcomeNoticeProps): ReactNode {
   const { complete, controller, useWelcome, t } = props

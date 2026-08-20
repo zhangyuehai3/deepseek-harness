@@ -1,6 +1,6 @@
 /**
  * Models settings and product-onboarding plugin, browser half. It registers
- * the Models page plus the ordered internal-testing and official-DeepSeek
+ * the Models page plus the ordered forced-update and official-DeepSeek
  * onboarding dialogs, whose UI shares this package's modal wrapper. The Host
  * settings and credential contracts stay behind their existing wire APIs.
  * Export discipline:
@@ -124,7 +124,7 @@ export function apply(ctx: ClientContext): void {
   }, ModelsSection))
   ctx.slots.inject('settings.onboarding', () => ctx.slots.register({
     name: 'settings.onboarding',
-    id: 'welcome-notice',
+    id: 'forced-update',
     order: -100,
     inject: welcomeInjected,
   }, WelcomeNotice))
