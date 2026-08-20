@@ -17,15 +17,15 @@ import type {} from '@deepseek-ai/dsh-client-locale/client'
 // through the service, never a value import (client bundle purity gate).
 import type {} from '@deepseek-ai/dsh-client-ui-settings/client'
 import type { ClientContext } from '@deepseek-ai/dsh-client-runtime/client'
-import { resolveSlotLabel } from '@deepseek-ai/dsh-client-ui-slots'
+// import { resolveSlotLabel } from '@deepseek-ai/dsh-client-ui-slots'
 // Type-only: the ctx.remote Context merge and the forwarded-event key face.
 import type {} from '@deepseek-ai/dsh-api-remotes/client'
 import { AgentLoopCard } from './AgentLoopCard.tsx'
 import { BashCard } from './BashCard.tsx'
 import { ConfigurablePluginsTab } from './ConfigurablePluginsTab.tsx'
 import type { ConfigurablePluginsTabInjected } from './ConfigurablePluginsTab.tsx'
-import { PluginsSettingsSection } from './PluginsSettingsSection.tsx'
-import type { PluginsSettingsSectionInjected, PluginsSettingsTabEntry } from './PluginsSettingsSection.tsx'
+// import { PluginsSettingsSection } from './PluginsSettingsSection.tsx'
+// import type { PluginsSettingsSectionInjected, PluginsSettingsTabEntry } from './PluginsSettingsSection.tsx'
 import { WebSearchCard } from './WebSearchCard.tsx'
 import { AGENT_LOOP_NS, AgentLoopCardController } from './agent-loop-card-controller.ts'
 import { SHELL_NS, BashCardController } from './bash-card-controller.ts'
@@ -71,52 +71,51 @@ export function apply(ctx: ClientContext): void {
     'ui-settings-plugins: credential invalidations',
   )
 
-  let tabsVersion = -1
-  let tabsRevision = -1
-  let tabs: readonly PluginsSettingsTabEntry[] = []
-  const sectionInjected = (): PluginsSettingsSectionInjected => ({
-    hooks: {
-      tabs: {
-        getSnapshot: () => {
-          const version = ctx.slots.getVersion('settings.plugins.tab')
-          const revision = ctx.locale.getSnapshot().revision
-          if (version !== tabsVersion || revision !== tabsRevision) {
-            tabsVersion = version
-            tabsRevision = revision
-            tabs = ctx.slots.entries('settings.plugins.tab')
-              .map(entry => ({
-                /* v8 ignore next -- list-slot registration requires id */
-                id: entry.options.id ?? '',
-                order: entry.options.order ?? 0,
-                label: resolveSlotLabel(entry.options.label) ?? '',
-              }))
-              .sort((a, b) => a.order - b.order)
-          }
-          return tabs
-        },
-        subscribe: (listener) => {
-          const offLedger = ctx.slots.subscribe('settings.plugins.tab', listener)
-          const offLocale = ctx.locale.subscribe(listener)
-          return () => {
-            offLedger()
-            offLocale()
-          }
-        },
-      },
-    },
-  })
+  // The Plugins navigation section is hidden in this desktop build.
+  // let tabsVersion = -1
+  // let tabsRevision = -1
+  // let tabs: readonly PluginsSettingsTabEntry[] = []
+  // const sectionInjected = (): PluginsSettingsSectionInjected => ({
+  //   hooks: {
+  //     tabs: {
+  //       getSnapshot: () => {
+  //         const version = ctx.slots.getVersion('settings.plugins.tab')
+  //         const revision = ctx.locale.getSnapshot().revision
+  //         if (version !== tabsVersion || revision !== tabsRevision) {
+  //           tabsVersion = version
+  //           tabsRevision = revision
+  //           tabs = ctx.slots.entries('settings.plugins.tab')
+  //             .map(entry => ({
+  //               /* v8 ignore next -- list-slot registration requires id */
+  //               id: entry.options.id ?? '',
+  //               order: entry.options.order ?? 0,
+  //               label: resolveSlotLabel(entry.options.label) ?? '',
+  //             }))
+  //             .sort((a, b) => a.order - b.order)
+  //         }
+  //         return tabs
+  //       },
+  //       subscribe: (listener) => {
+  //         const offLedger = ctx.slots.subscribe('settings.plugins.tab', listener)
+  //         const offLocale = ctx.locale.subscribe(listener)
+  //         return () => {
+  //           offLedger()
+  //           offLocale()
+  //         }
+  //       },
+  //     },
+  //   },
+  // })
 
-  // This package owns the one Plugins navigation entry and the tab chrome;
-  // feature plugins contribute pages without competing for Settings nav rows.
-  ctx.slots.inject('settings.section', () => ctx.slots.register({
-    name: 'settings.section',
-    id: 'plugins',
-    order: 15,
-    label: () => t('nav'),
-    locale: NS,
-    inject: sectionInjected,
-    children: { 'settings.plugins.tab': { kind: 'list', scope: 'root' } },
-  }, PluginsSettingsSection))
+  // ctx.slots.inject('settings.section', () => ctx.slots.register({
+  //   name: 'settings.section',
+  //   id: 'plugins',
+  //   order: 15,
+  //   label: () => t('nav'),
+  //   locale: NS,
+  //   inject: sectionInjected,
+  //   children: { 'settings.plugins.tab': { kind: 'list', scope: 'root' } },
+  // }, PluginsSettingsSection))
 
   // The existing configuration page is one ordinary tab. It keeps ownership
   // of the card slot and the three shipped card contributions below.
