@@ -113,6 +113,7 @@
    pointer cursor is the sole affordance — no hover chrome on the mark. */
 .brand {
   flex: 1;
+  height: 50px;
   min-width: 0;
   display: inline-flex;
   align-items: center;
