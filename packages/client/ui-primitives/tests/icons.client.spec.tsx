@@ -64,3 +64,19 @@ describe('FishLogo', () => {
     expect(img.getAttribute('aria-hidden')).toBe('true')
   })
 })
+
+describe('BrandWordmark', () => {
+  it('renders the branded logo image by default', () => {
+    const view = render(<primitives.BrandWordmark size={40} />)
+    const img = view.container.querySelector('img')!
+    expect(img.getAttribute('height')).toBe('40')
+    expect(img.getAttribute('width')).toBe('auto')
+    expect(img.getAttribute('src')).toMatch(/^data:image\/png;base64,/)
+  })
+
+  it('can render the name artwork without its leading mark', () => {
+    const view = render(<primitives.BrandWordmark size={24} includeMark={false} />)
+    const span = view.container.querySelector('span')!
+    expect(span.textContent).toBe('金石易服')
+  })
+})

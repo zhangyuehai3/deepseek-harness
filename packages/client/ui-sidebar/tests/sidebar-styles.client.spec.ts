@@ -63,4 +63,13 @@ describe('SidebarRoot.module.css', () => {
     expect(declarations('.collapsed .newSession')?.get('align-self')).toBe('flex-start')
     expect(declarations('.collapsed .newSession')?.get('width')).toBe('36px')
   })
+
+  it('keeps the slotted brand row at the full artwork height', () => {
+    expect(declarations('.brandIdentity')?.get('height')).toBe('24px')
+    expect(declarations('.brandName')?.get('height')).toBe('24px')
+    expect(declarations('.brandName')?.get('line-height')).toBe('24px')
+    expect(declarations('.brandTextZh')?.get('font-size')).toBe('16px')
+    expect(declarations('.brandTextEn')?.get('font-size')).toBe('13px')
+    expect(declarations('.brandTexts')?.get('white-space')).toBe('nowrap')
+  })
 })
