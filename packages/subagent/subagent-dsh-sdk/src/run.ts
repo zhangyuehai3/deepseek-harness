@@ -1,5 +1,5 @@
 /**
- * Fresh-process SDK subagent client. Drives one child EZAIGC Harness
+ * Fresh-process SDK subagent client. Drives one child EZAI Harness
  * runtime over stdio JSON-RPC through `@deepseek-ai/dsh-sdk-client` and owns
  * cancellation and quiescent disposal. Structure mirrors the ACP backend
  * (`@deepseek-ai/dsh-subagent-acp`): publish after the child handshake,

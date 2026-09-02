@@ -104,7 +104,7 @@ describe('SidebarRoot shell', () => {
     />)
 
     expect(screen.getByText('金石易服')).toBeTruthy()
-    expect(screen.getByText('EZAIGC')).toBeTruthy()
+    expect(screen.getByText('EZAI')).toBeTruthy()
     expect(container.querySelector('img')).not.toBeNull()
   })
 

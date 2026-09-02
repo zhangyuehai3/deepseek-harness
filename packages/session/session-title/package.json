@@ -1,6 +1,6 @@
 {
   "name": "@deepseek-ai/dsh-session-title",
-  "description": "Log-backed session title service and provider registry for the EZAIGC Harness",
+  "description": "Log-backed session title service and provider registry for the EZAI Harness",
   "version": "0.1.1-rc.2",
   "publishConfig": {
     "access": "public"

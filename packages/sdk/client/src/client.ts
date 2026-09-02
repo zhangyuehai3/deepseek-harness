@@ -1,5 +1,5 @@
 /**
- * Low-level JSON-RPC client for a EZAIGC Harness SDK runtime subprocess.
+ * Low-level JSON-RPC client for a EZAI Harness SDK runtime subprocess.
  * {@link HarnessClient} owns the child process: it spawns the runtime, speaks
  * the `@deepseek-ai/dsh-sdk-protocol` wire over the child's stdio, fans
  * server notifications out to subscriptions, and tears the child down to
@@ -173,7 +173,7 @@ class NotificationSubscriptionImpl implements NotificationSubscription {
 }
 
 /**
- * JSON-RPC client for the EZAIGC Harness SDK runtime over subprocess stdio.
+ * JSON-RPC client for the EZAI Harness SDK runtime over subprocess stdio.
  *
  * The subprocess starts lazily on {@link start} and is owned by this instance
  * until {@link close}, which requests protocol `shutdown` and then walks the
@@ -308,7 +308,7 @@ export class HarnessClient {
     }
     const transport = this.transport
     /* v8 ignore next -- start() either sets the transport or throws */
-    if (transport === undefined) throw new TransportClosedError('EZAIGC Harness runtime is not running')
+    if (transport === undefined) throw new TransportClosedError('EZAI Harness runtime is not running')
     const timeout = timeoutMs ?? this.options.requestTimeoutMs
     try {
       if (timeout === undefined) return await transport.request(method, params ?? {})
@@ -397,7 +397,7 @@ export class HarnessClient {
       disposeGraceMs: this.options.disposeGraceMs ?? 3_000,
     })
     this.transport?.close()
-    this.failSubscriptions(this.closedError('EZAIGC Harness runtime closed'))
+    this.failSubscriptions(this.closedError('EZAI Harness runtime closed'))
   }
 
   private dispatchNotification(notification: HarnessNotification): void {

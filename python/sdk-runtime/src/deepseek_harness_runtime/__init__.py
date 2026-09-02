@@ -1,4 +1,4 @@
-"""Locate the bundled EZAIGC Harness SDK runtime shipped with this package.
+"""Locate the bundled EZAI Harness SDK runtime shipped with this package.
 
 Two runtime carriers coexist under ``runtime/``, both injected by the repo's
 ``scripts/build-exe-for-python-sdk.ts`` build (neither is checked into git):
@@ -118,7 +118,7 @@ def resolve_bundled_launch_args(mode: str | None = None) -> tuple[str, ...]:
     if selected == "node":
         return _node_launch_args()
     raise ValueError(
-        f"unsupported EZAIGC Harness runtime mode {selected!r}: expected 'exe' or 'node' "
+        f"unsupported EZAI Harness runtime mode {selected!r}: expected 'exe' or 'node' "
         f"(explicit argument or ${RUNTIME_MODE_ENV_VAR})"
     )
 

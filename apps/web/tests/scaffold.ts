@@ -81,7 +81,7 @@ export const WELCOME_NOTICE_VERSION = '2026-08-20.1'
 export const WELCOME_NOTICE_COPY = {
   zh: {
     title: '强制更新页面',
-    body: '请更新到最新版本的 EZAIGC Desktop 后再继续使用。',
+    body: '请更新到最新版本的 EZAI Desktop 后再继续使用。',
     continueLabel: '继续',
   },
 } as const

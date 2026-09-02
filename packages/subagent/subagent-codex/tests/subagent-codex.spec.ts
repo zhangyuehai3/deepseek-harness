@@ -687,7 +687,7 @@ describe('CodexAppServerWire', () => {
     expect(initialize.params).toEqual({
       clientInfo: {
         name: 'deepseek-harness',
-        title: 'EZAIGC Harness',
+        title: 'EZAI Harness',
         version: '0.0.1',
       },
       capabilities: {

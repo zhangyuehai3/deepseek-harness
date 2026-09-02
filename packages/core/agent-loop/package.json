@@ -1,6 +1,6 @@
 {
   "name": "@deepseek-ai/dsh-agent-loop",
-  "description": "The concrete agent loop plugin for the EZAIGC Harness",
+  "description": "The concrete agent loop plugin for the EZAI Harness",
   "version": "0.1.1-rc.2",
   "publishConfig": {
     "access": "public"

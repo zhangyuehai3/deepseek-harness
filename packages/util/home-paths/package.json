@@ -1,6 +1,6 @@
 {
   "name": "@deepseek-ai/dsh-home-paths",
-  "description": "Shared filesystem path helpers for the EZAIGC Harness",
+  "description": "Shared filesystem path helpers for the EZAI Harness",
   "version": "0.1.1-rc.2",
   "publishConfig": {
     "access": "public"

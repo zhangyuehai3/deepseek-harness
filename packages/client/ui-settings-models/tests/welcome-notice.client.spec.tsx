@@ -88,8 +88,8 @@ function mount(
 describe('WelcomeNotice', () => {
   it('uses the exact owner copy in both GUI locales', () => {
     expect(WELCOME_NOTICE_COPY.en).toEqual({
-      title: 'Welcome to EZAIGC Desktop',
-      body: 'Built on the EZAIGC Harness architecture and deeply customized, seamlessly integrating a collaborative matrix of top-tier large models including DeepSeek, Kimi, and more. Natively supports deep-thinking reasoning chains, intelligent web retrieval, and global quick wake-up. All conversation data is encrypted and stored locally, delivering a purer, faster, and more secure desktop-level AI collaborative productivity experience.',
+      title: 'Welcome to EZAI Desktop',
+      body: 'Built on the EZAI Harness architecture and deeply customized, seamlessly integrating a collaborative matrix of top-tier large models including DeepSeek, Kimi, and more. Natively supports deep-thinking reasoning chains, intelligent web retrieval, and global quick wake-up. All conversation data is encrypted and stored locally, delivering a purer, faster, and more secure desktop-level AI collaborative productivity experience.',
       continueLabel: 'Get Started',
     })
     expect(en.welcomeBody).toBe(WELCOME_NOTICE_COPY.en.body)

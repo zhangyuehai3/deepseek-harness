@@ -1,4 +1,4 @@
 - dialog "强制更新页面":
   - heading "强制更新页面" [level=2]
-  - paragraph: 请更新到最新版本的 EZAIGC Desktop 后再继续使用。
+  - paragraph: 请更新到最新版本的 EZAI Desktop 后再继续使用。
   - button "继续"

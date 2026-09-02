@@ -144,7 +144,7 @@ export function SidebarRoot({
                   fallback: (
                     <div className={css.brandTexts}>
                       <span className={css.brandTextZh}>金石易服</span>
-                      <span className={css.brandTextEn}>EZAIGC</span>
+                      <span className={css.brandTextEn}>EZAI</span>
                     </div>
                   ),
                 })}
