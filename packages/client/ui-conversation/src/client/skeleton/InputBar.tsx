@@ -100,7 +100,8 @@ export function InputBar({
   // Session-maybe: the machine faces are absent together while no session is
   // current; the bar renders the same DOM inert instead of a parallel tree.
   const live = input !== undefined && keyboard !== undefined && inputActions !== undefined
-  const draft = input?.draft ?? ''
+  const isAuthBlocked = blocked !== undefined && (blocked.reason.includes('登录') || blocked.reason.toLowerCase().includes('log in'))
+  const draft = isAuthBlocked ? '' : (input?.draft ?? '')
   const attachments = useMemo(
     () => input === undefined || draftImages === undefined ? [] : draftImages(input.imageIds),
     [draftImages, input?.imageIds],
