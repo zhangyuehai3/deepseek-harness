@@ -128,9 +128,13 @@ export function InputBar({
   // developer-facing and keep the raw message plus code.
   useEffect(() => {
     if (promptError === null) return
-    showToast(promptError.error.code === 'attachment-error'
-      ? attachmentErrorText(t, promptError.error.details.reason, imageLimits)
-      : `${promptError.error.message} (${promptError.error.code})`)
+    const isModelUnavailable = promptError.error.code === 'model-unavailable'
+      || promptError.error.message.includes('no adapter serves provider')
+    showToast(isModelUnavailable
+      ? '请登录账号后使用'
+      : promptError.error.code === 'attachment-error'
+        ? attachmentErrorText(t, promptError.error.details.reason, imageLimits)
+        : `${promptError.error.message} (${promptError.error.code})`)
   }, [promptError, showToast, t, imageLimits])
   useEffect(() => {
     if (notice?.level === 'error') showToast(notice.text)
