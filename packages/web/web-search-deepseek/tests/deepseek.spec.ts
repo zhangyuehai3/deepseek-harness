@@ -6,7 +6,7 @@ import { Context } from '@deepseek-ai/cordis'
 import Loader from '@deepseek-ai/cordis-plugin-loader'
 import { credentialRef } from '@deepseek-ai/dsh-credentials'
 import LocalCredentialProvider from '@deepseek-ai/dsh-credentials-local'
-import WebRuntime from '@deepseek-ai/dsh-web'
+import WebRuntime, { WebError } from '@deepseek-ai/dsh-web'
 import {
   DeepSeekSearchProvider,
   DEEPSEEK_PROVIDER_ID,
@@ -20,6 +20,17 @@ import type { DeepSeekSearchProviderOptions } from '@deepseek-ai/dsh-web-search-
 
 const searchProvider = (options: DeepSeekSearchProviderOptions): DeepSeekSearchProvider =>
   new DeepSeekSearchProvider(() => options)
+
+/** Return the provider's rejected WebError, or propagate an unexpected outcome. */
+async function rejectedWebError(operation: Promise<unknown>): Promise<WebError> {
+  try {
+    await operation
+  } catch (error: unknown) {
+    if (error instanceof WebError) return error
+    throw error
+  }
+  throw new Error('expected search operation to reject')
+}
 
 const options = {
   apiKey: 'ds-key',
@@ -294,13 +305,13 @@ describe('DeepSeekSearchProvider error handling', () => {
     }).search({ query: 'q' }, controller.signal))
       .rejects.toThrow(expect.objectContaining({
         code: 'WEB_PROVIDER_ERROR',
-        message: '金石易服 search credential resolution failed: Error: credential backend failed',
+        message: 'DeepSeek search credential resolution failed: Error: credential backend failed',
       }))
   })
 
   it('uses the default credential reference when no resolver is configured', async () => {
     await expect(searchProvider({ ...options, apiKey: '' }).search({ query: 'q' }))
-      .rejects.toThrow('金石易服 search has no API key for "DEEPSEEK_API_KEY"')
+      .rejects.toThrow('DeepSeek search has no API key for "DEEPSEEK_API_KEY"')
   })
 
   it('observes cancellation triggered synchronously by credential resolution', async () => {
@@ -322,25 +333,34 @@ describe('DeepSeekSearchProvider error handling', () => {
   it('maps an HTTP error to WEB_PROVIDER_ERROR with the provider message', async () => {
     vi.stubGlobal('fetch', vi.fn(async () => jsonResponse({ error: { message: 'rate limited' } }, { status: 429 })))
     await expect(searchProvider(options).search({ query: 'q' }))
-      .rejects.toThrow(expect.objectContaining({ code: 'WEB_PROVIDER_ERROR', message: 'rate limited' }))
+      .rejects.toThrow(expect.objectContaining({
+        code: 'WEB_PROVIDER_ERROR',
+        message: 'DeepSeek API error (HTTP 429): rate limited\n\n'
+          + 'The web search request used endpoint "https://api.deepseek.test/anthropic/v1/messages". '
+          + 'Search endpoint configuration is separate from chat. If that endpoint is not intended, '
+          + 'guide the user to Settings > Plugins > Plugin configuration > Web search, where they can '
+          + 'change and save Endpoint. If that settings page is unavailable, the user can set '
+          + 'DEEPSEEK_SEARCH_BASE_URL or configure web-search-deepseek.baseURL to a trusted '
+          + 'Anthropic-compatible Messages API base. Only the user should choose or change the endpoint.',
+      }))
   })
 
   it('handles a string-form error body', async () => {
     vi.stubGlobal('fetch', vi.fn(async () => jsonResponse({ error: 'bad request' }, { status: 400 })))
-    await expect(searchProvider(options).search({ query: 'q' }))
-      .rejects.toThrow(expect.objectContaining({ message: 'bad request' }))
+    const error = await rejectedWebError(searchProvider(options).search({ query: 'q' }))
+    expect(error.message).toContain('DeepSeek API error (HTTP 400): bad request')
   })
 
   it('keeps a status-line message when the error body is not JSON', async () => {
     vi.stubGlobal('fetch', vi.fn(async () => new Response('upstream error', { status: 503 })))
-    await expect(searchProvider(options).search({ query: 'q' }))
-      .rejects.toThrow(expect.objectContaining({ message: '金石易服 API error (HTTP 503)' }))
+    const error = await rejectedWebError(searchProvider(options).search({ query: 'q' }))
+    expect(error.message).toContain('DeepSeek API error (HTTP 503)')
   })
 
   it('keeps the status-line message when the JSON error body carries no detail', async () => {
     vi.stubGlobal('fetch', vi.fn(async () => jsonResponse({}, { status: 500 })))
-    await expect(searchProvider(options).search({ query: 'q' }))
-      .rejects.toThrow(expect.objectContaining({ message: '金石易服 API error (HTTP 500)' }))
+    const error = await rejectedWebError(searchProvider(options).search({ query: 'q' }))
+    expect(error.message).toContain('DeepSeek API error (HTTP 500)')
   })
 
   it('maps an abort to WEB_ABORTED', async () => {
@@ -388,14 +408,16 @@ describe('DeepSeekSearchProvider error handling', () => {
 
   it('maps a network failure to WEB_PROVIDER_ERROR', async () => {
     vi.stubGlobal('fetch', vi.fn(() => Promise.reject(new TypeError('connection refused'))))
-    await expect(searchProvider(options).search({ query: 'q' }))
-      .rejects.toThrow(expect.objectContaining({ code: 'WEB_PROVIDER_ERROR' }))
+    const error = await rejectedWebError(searchProvider(options).search({ query: 'q' }))
+    expect(error.code).toBe('WEB_PROVIDER_ERROR')
+    expect(error.message).toContain('The web search request used endpoint "https://api.deepseek.test/anthropic/v1/messages".')
   })
 
   it('strict mode flows through search(): a prose-only response throws WEB_PROVIDER_ERROR', async () => {
     vi.stubGlobal('fetch', vi.fn(async () => jsonResponse({ content: [{ type: 'text', text: 'no search happened' }] })))
-    await expect(searchProvider(options).search({ query: 'q' }))
-      .rejects.toThrow(expect.objectContaining({ code: 'WEB_PROVIDER_ERROR' }))
+    const error = await rejectedWebError(searchProvider(options).search({ query: 'q' }))
+    expect(error.code).toBe('WEB_PROVIDER_ERROR')
+    expect(error.message).toContain('Search endpoint configuration is separate from chat.')
   })
 })
 
